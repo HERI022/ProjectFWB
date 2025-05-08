@@ -1,13 +1,12 @@
 # <div align="center">SISTEM DONASI BERBASIS ONLINE</div>
 
-<div align="center">
-  <img src="https://www.university-logo.example/logo.png" alt="Universitas Contoh" width="200">
+<p align="center">
+  <img src="/public/LogoUnsulbar.png" width="300" alt="LogoUnsulbar" />
+</p>
 
-</div>
+### <p align="center">Heri</p>
 
-### <p align="center">RIZKY ADIWIJAYA</p>
-
-### <p align="center">D022045</p></br>
+### <p align="center">D0222544</p></br>
 
 ### <p align="center">FRAMEWORK WEB BASED</p>
 
@@ -38,52 +37,56 @@ Berikut adalah daftar tabel, field, tipe data
 🔹 users
 Menyimpan data pengguna dengan berbagai role: admin, donatur, penerima.
 
-Field Tipe Data Keterangan
-id BIGINT (auto) Primary key
-jenisAkun VARCHAR(50) Role: admin, donatur, atau penerima
-username VARCHAR(255) Nama pengguna unik
-email_verified_at TIMESTAMP NULL Tanggal verifikasi email
-password VARCHAR(255) Password terenkripsi
-remember_token VARCHAR(100) Token untuk "remember me"
-created_at TIMESTAMP Otomatis dibuat oleh Laravel
-updated_at TIMESTAMP Otomatis diubah oleh Laravel
+| Field             | Tipe Data      | Keterangan                 |
+| ----------------- | -------------- | -------------------------- |
+| id                | BIGINT (auto)  | Primary Key                |
+| jenisAkun         | VARCHAR(50)    | admin / donatur / penerima |
+| username          | VARCHAR(255)   | Unik                       |
+| email_verified_at | TIMESTAMP NULL | Waktu verifikasi email     |
+| password          | VARCHAR(255)   | Password terenkripsi       |
+| remember_token    | VARCHAR(100)   | Token login                |
+| created_at        | TIMESTAMP      |                            |
+| updated_at        | TIMESTAMP      |                            |
 
 🔹 sessions
 Tabel sistem untuk menyimpan sesi login pengguna.
 
-Field Tipe Data Keterangan
-id VARCHAR(255) Primary key
-user_id BIGINT NULL FK ke users(id)
-ip_address VARCHAR(45) Alamat IP pengguna
-user_agent TEXT Info browser pengguna
-payload LONGTEXT Data session
-last_activity INTEGER Timestamp aktivitas terakhir
+| Field         | Tipe Data    | Keterangan                 |
+| ------------- | ------------ | -------------------------- |
+| id            | VARCHAR(255) | Primary Key                |
+| user_id       | BIGINT NULL  | Foreign Key ke `users(id)` |
+| ip_address    | VARCHAR(45)  | Alamat IP                  |
+| user_agent    | TEXT         | Info browser               |
+| payload       | LONGTEXT     | Data session               |
+| last_activity | INT          | Aktivitas terakhir         |
 
 🔹 donaturs
 Menyimpan data donasi yang dilakukan oleh donatur.
 
-Field Tipe Data Keterangan
-id BIGINT Primary key
-nama VARCHAR(255) Nama donatur
-pesan TEXT Pesan/kesan dari donatur
-total_donasi BIGINT Jumlah donasi
-tipe_bayar VARCHAR(100) Metode pembayaran
-bantuan_id BIGINT NULL FK ke permohonan_bantuan(id) (nullable)
-created_at TIMESTAMP
-updated_at TIMESTAMP
+| Field        | Tipe Data    | Keterangan                                  |
+| ------------ | ------------ | ------------------------------------------- |
+| id           | BIGINT       | Primary Key                                 |
+| nama         | VARCHAR(255) | Nama donatur                                |
+| pesan        | TEXT         | Pesan dari donatur                          |
+| total_donasi | BIGINT       | Nominal donasi                              |
+| tipe_bayar   | VARCHAR(100) | Metode pembayaran                           |
+| bantuan_id   | BIGINT NULL  | FK ke `permohonan_bantuan(id)` _(nullable)_ |
+| created_at   | TIMESTAMP    |                                             |
+| updated_at   | TIMESTAMP    |                                             |
 
 🔹 permohonan_bantuan
 Menyimpan permohonan bantuan dari pengguna dengan role penerima.
 
-Field Tipe Data Keterangan
-id BIGINT Primary key
-user_id BIGINT FK ke users(id)
-judul VARCHAR(255) Judul pengajuan bantuan
-deskripsi TEXT Penjelasan mengenai bantuan yang dibutuhkan
-jumlah_dibutuhkan BIGINT Nominal dana yang dibutuhkan
-status ENUM diajukan, disetujui, atau ditolak
-created_at TIMESTAMP
-updated_at TIMESTAMP
+| Field             | Tipe Data    | Keterangan                         |
+| ----------------- | ------------ | ---------------------------------- |
+| id                | BIGINT       | Primary Key                        |
+| user_id           | BIGINT       | FK ke `users(id)` sebagai penerima |
+| judul             | VARCHAR(255) | Judul permohonan                   |
+| deskripsi         | TEXT         | Penjelasan bantuan                 |
+| jumlah_dibutuhkan | BIGINT       | Total bantuan yang dibutuhkan      |
+| status            | ENUM         | 'diajukan', 'disetujui', 'ditolak' |
+| created_at        | TIMESTAMP    |                                    |
+| updated_at        | TIMESTAMP    |                                    |
 
 ## <a id="relasi"></a>【 Jenis Relasi dan Tabel Yang Berelasi 】
 
@@ -105,6 +108,14 @@ updated_at TIMESTAMP
 🔗 Relasi: Permohonan_bantuan
 Many-to-One ke users (user sebagai penerima)
 One-to-Many dari donaturs (donasi terhadap permohonan ini)
+
+users ➝ permohonan_bantuan: One-to-Many
+
+users ➝ sessions: One-to-Many
+
+permohonan_bantuan ➝ donaturs: One-to-Many
+
+donaturs.bantuan_id ➝ permohonan_bantuan.id: Optional
 
 📌 Penjelasan Jenis Tabel:
 Tabel Jenis Keterangan
