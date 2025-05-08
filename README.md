@@ -16,9 +16,9 @@
 
 ## <a id="role"></a>【 Role 】
 
-**Admin**
-**Donatur**
-**Penerima donasi**
+-   Admin
+-   Donatur
+-   Penerima donasi
 
 ## <a id="fitur"></a>【 Fitur-Fitur 】
 
